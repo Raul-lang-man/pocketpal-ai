@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {TouchableOpacity, View, Alert, SectionList} from 'react-native';
 import {observer} from 'mobx-react';
 import {Divider, Drawer, Text} from 'react-native-paper';
+import {EVE_IDENTITY} from '../../config/eve';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {DrawerContentComponentProps} from '@react-navigation/drawer';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -536,6 +537,15 @@ export const SidebarContent: React.FC<DrawerContentComponentProps> = observer(
     const ListHeaderComponent = React.useMemo(
       () => (
         <View>
+          <View style={{paddingHorizontal: 20, paddingTop: 16, paddingBottom: 12}}>
+            <Text variant="headlineSmall" style={{fontWeight: '800', letterSpacing: 5}}>
+              {EVE_IDENTITY.name}
+            </Text>
+            <Text variant="bodySmall" style={{opacity: 0.55, letterSpacing: 2}}>
+              PRIVATE · LOCAL · YOURS
+            </Text>
+          </View>
+          <Divider style={styles.divider} />
           <Drawer.Section showDivider={false}>
             <Drawer.Item
               label={l10n.components.sidebarContent.menuItems.chat}
