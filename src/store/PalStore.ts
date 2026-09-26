@@ -22,6 +22,7 @@ import {Platform} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {HF_DOMAIN} from '../config/urls';
+import {EVE, EVE_COMPLETION_SETTINGS, EVE_SYSTEM_PROMPT} from '../config/eve';
 
 import {palRepository} from '../repositories/PalRepository';
 
@@ -54,6 +55,7 @@ import {downloadPalThumbnail, deletePalThumbnail} from '../utils/imageUtils';
 // (check key, find existing, create, set key) instead of a third copy.
 const LOOKIE_SEEDED_KEY = 'PalStore.builtin.Lookie.seeded';
 const PIP_SEEDED_KEY = 'PalStore.builtin.Pip.seeded';
+const EVE_SEEDED_KEY = 'PalStore.builtin.EVE.seeded.v1';
 
 class PalStore {
   // Core pals storage
@@ -99,6 +101,9 @@ class PalStore {
 
       // Initialize Pip pal (idempotent — see initializePipPal).
       await this.initializePipPal();
+
+      // Seed EVE as the local-first assistant persona.
+      await this.initializeEvePal();
 
       // Register talent engines (idempotent)
       registerDefaultTalents();
@@ -762,6 +767,60 @@ class PalStore {
       console.error('Error initializing Lookie pal:', error);
     }
   }
+
+
+  /**
+   * Seed EVE once without overwriting user edits on later launches.
+   *
+   * The model is deliberately left unbound: EVE uses whichever local GGUF the
+   * user chooses, including imported models. This keeps personality separate
+   * from model choice.
+   */
+  private async initializeEvePal(): Promise<void> {
+    try {
+      if ((await AsyncStorage.getItem(EVE_SEEDED_KEY)) === 'true') {
+        return;
+      }
+
+      const existing = this.pals.find(
+        p => p.name === EVE.name && p.source === 'local',
+      );
+      if (existing) {
+        await AsyncStorage.setItem(EVE_SEEDED_KEY, 'true');
+        return;
+      }
+
+      const palData: Omit<Pal, 'id' | 'created_at' | 'updated_at'> = {
+        type: 'local',
+        name: EVE.name,
+        description: 'A fast, private local AI assistant with a natural personality.',
+        systemPrompt: EVE_SYSTEM_PROMPT,
+        isSystemPromptChanged: false,
+        useAIPrompt: false,
+        defaultModel: undefined,
+        parameters: {},
+        parameterSchema: [],
+        completionSettings: {...EVE_COMPLETION_SETTINGS},
+        capabilities: {memory: true, web: true, tools: true},
+        greeting: {
+          text: EVE.greeting,
+          suggestedPrompts: [
+            'Help me solve something',
+            'Let’s build something',
+            'Explain this simply',
+          ],
+        },
+        color: ['#05070A', '#8FA7C2'],
+        source: 'local',
+      };
+
+      await this.addPal(palData);
+      await AsyncStorage.setItem(EVE_SEEDED_KEY, 'true');
+    } catch (error) {
+      console.error('Error initializing EVE pal:', error);
+    }
+  }
+
 
   /**
    * Seed the default "Pip" recommended pal once. After the first launch that
