@@ -537,8 +537,11 @@ export const SidebarContent: React.FC<DrawerContentComponentProps> = observer(
     const ListHeaderComponent = React.useMemo(
       () => (
         <View>
-          <View style={{paddingHorizontal: 20, paddingTop: 16, paddingBottom: 12}}>
-            <Text variant="headlineSmall" style={{fontWeight: '800', letterSpacing: 5}}>
+          <View
+            style={{paddingHorizontal: 20, paddingTop: 16, paddingBottom: 12}}>
+            <Text
+              variant="headlineSmall"
+              style={{fontWeight: '800', letterSpacing: 5}}>
               {EVE_IDENTITY.name}
             </Text>
             <Text variant="bodySmall" style={{opacity: 0.55, letterSpacing: 2}}>
