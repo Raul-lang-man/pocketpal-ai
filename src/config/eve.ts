@@ -12,6 +12,9 @@ export const EVE = {
   localFirst: true,
 } as const;
 
+// Backwards-compatible identity alias used by EVE-branded UI components.
+export const EVE_IDENTITY = EVE;
+
 /**
  * Compact on purpose: every system-prompt token consumes context and prompt
  * processing time on-device. Personality is behavioural rather than padded
