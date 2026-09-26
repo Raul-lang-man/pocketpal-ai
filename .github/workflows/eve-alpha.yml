@@ -1,0 +1,102 @@
+name: EVE Android Alpha
+
+on:
+  push:
+    branches:
+      - eve-dev
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  alpha-apk:
+    runs-on: ubuntu-latest
+    env:
+      ORG_GRADLE_PROJECT_rnllamaBuildFromSource: 'true'
+    steps:
+      - name: Check out EVE
+        uses: actions/checkout@v4
+
+      - name: Free build space
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc || true
+          df -h /
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.21.0'
+          cache: yarn
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Validate EVE source
+        run: |
+          yarn typecheck
+          yarn lint
+
+      - name: Configure llama.rn variants
+        run: |
+          VARIANTS=$(node scripts/verify-android-payload.js --print-variants)
+          echo "ORG_GRADLE_PROJECT_rnllamaVariants=$VARIANTS" >> "$GITHUB_ENV"
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - name: Set up Hexagon SDK
+        uses: ./.github/actions/setup-hexagon-sdk
+
+      - name: Create CI Google services config
+        run: |
+          cat > android/app/google-services.json << 'EOF'
+          {
+            "project_info": {
+              "project_number": "000000000000",
+              "project_id": "eve-alpha",
+              "storage_bucket": "eve-alpha.appspot.com"
+            },
+            "client": [{
+              "client_info": {
+                "mobilesdk_app_id": "1:000000000000:android:0000000000000000",
+                "android_client_info": {"package_name": "com.pocketpalai"}
+              },
+              "api_key": [{"current_key": "dummy-alpha-key"}]
+            }]
+          }
+          EOF
+
+      - name: Create alpha environment
+        run: |
+          cat > .env << 'EOF'
+          FIREBASE_FUNCTIONS_URL=https://dummy.invalid
+          SUPABASE_URL=https://dummy.supabase.co
+          SUPABASE_ANON_KEY=dummy
+          PALSHUB_API_BASE_URL=https://dummy.invalid
+          APP_URL=pocketpal://app
+          ENABLE_PALSHUB_INTEGRATION=false
+          ENABLE_AUTHENTICATION=false
+          ENABLE_OFFLINE_MODE=true
+          GOOGLE_IOS_CLIENT_ID=dummy
+          GOOGLE_WEB_CLIENT_ID=dummy
+          EOF
+
+      - name: Build installable EVE APK
+        working-directory: android
+        run: ./gradlew assembleProdRelease
+
+      - name: Upload EVE Alpha APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: EVE-Android-Alpha
+          path: android/app/build/outputs/apk/prod/release/app-prod-release.apk
+          if-no-files-found: error
+          retention-days: 14
