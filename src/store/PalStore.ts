@@ -768,7 +768,6 @@ class PalStore {
     }
   }
 
-
   /**
    * Seed EVE once without overwriting user edits on later launches.
    *
@@ -793,7 +792,8 @@ class PalStore {
       const palData: Omit<Pal, 'id' | 'created_at' | 'updated_at'> = {
         type: 'local',
         name: EVE.name,
-        description: 'A fast, private local AI assistant with a natural personality.',
+        description:
+          'A fast, private local AI assistant with a natural personality.',
         systemPrompt: EVE_SYSTEM_PROMPT,
         isSystemPromptChanged: false,
         useAIPrompt: false,
@@ -820,7 +820,6 @@ class PalStore {
       console.error('Error initializing EVE pal:', error);
     }
   }
-
 
   /**
    * Seed the default "Pip" recommended pal once. After the first launch that
