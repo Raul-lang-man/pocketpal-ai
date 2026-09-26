@@ -16,7 +16,9 @@ export const ChatHeaderTitle: React.FC = observer(() => {
         {EVE_IDENTITY.name}
       </Text>
       <Text numberOfLines={1} variant="bodySmall">
-        {activeModel?.name ? `ONLINE · ${activeModel.name}` : 'LOCAL AI · MODEL STANDBY'}
+        {activeModel?.name
+          ? `ONLINE · ${activeModel.name}`
+          : 'LOCAL AI · MODEL STANDBY'}
       </Text>
     </View>
   );
