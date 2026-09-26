@@ -67,7 +67,7 @@ jobs:
             "client": [{
               "client_info": {
                 "mobilesdk_app_id": "1:000000000000:android:0000000000000000",
-                "android_client_info": {"package_name": "com.pocketpalai"}
+                "android_client_info": {"package_name": "com.pocketpalai.evealpha"}
               },
               "api_key": [{"current_key": "dummy-alpha-key"}]
             }]
@@ -91,12 +91,12 @@ jobs:
 
       - name: Build installable EVE APK
         working-directory: android
-        run: ./gradlew assembleProdRelease
+        run: ./gradlew assembleEveRelease
 
       - name: Upload EVE Alpha APK
         uses: actions/upload-artifact@v4
         with:
-          name: EVE-Android-Alpha
-          path: android/app/build/outputs/apk/prod/release/app-prod-release.apk
+          name: EVE-Android-Alpha-SideBySide
+          path: android/app/build/outputs/apk/eve/release/app-eve-release.apk
           if-no-files-found: error
           retention-days: 14
