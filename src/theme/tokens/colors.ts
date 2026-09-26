@@ -60,7 +60,7 @@ export const lightColors: TokenColors = {
   surfaceVariant: '#e4e4e6',
   onSurfaceVariant: '#646466',
   outline: withOpacity(LIGHT_PRIMARY, 0.05),
-  outlineVariant: '#a1a1a1',
+  outlineVariant: '#68686F',
   mutedLight: '#e5e3e1',
   // Figma `Color/Secondary/Default` — the secondary surface used by
   // small DS buttons (back chevron, audio glyph) over the muted canvas.
@@ -163,13 +163,13 @@ export const lightColors: TokenColors = {
 // Dark base values from canonical Figma. Where the canonical dark binding
 // differs visibly from the current dark Theme value, the current value
 // wins to avoid visual regression (tracked as a designer follow-up).
-const DARK_PRIMARY = '#DADDE6';
-const DARK_SECONDARY = '#95ABE6';
-const DARK_TERTIARY = '#80E6E4';
+const DARK_PRIMARY = '#E5E7EB';
+const DARK_SECONDARY = '#EF4444';
+const DARK_TERTIARY = '#B91C1C';
 const DARK_ERROR = '#FF653F';
-const DARK_BACKGROUND = '#000000';
+const DARK_BACKGROUND = '#070708';
 const DARK_ON_BACKGROUND = '#ffffff';
-const DARK_SURFACE = '#0E0E0E';
+const DARK_SURFACE = '#101012';
 const DARK_ON_SURFACE = '#E2E2E2';
 const DARK_INVERSE_ON_SURFACE = '#333333';
 
@@ -177,16 +177,16 @@ export const darkColors: TokenColors = {
   // MD3 base palette (dark) — verbatim from canonical Figma
   primary: DARK_PRIMARY,
   onPrimary: '#44464C',
-  primaryContainer: '#5B5E66',
-  onPrimaryContainer: '#DEE0E6',
+  primaryContainer: '#2A0D10',
+  onPrimaryContainer: '#F3F4F6',
   secondary: DARK_SECONDARY,
   onSecondary: '#11214C',
-  secondaryContainer: '#424242',
-  onSecondaryContainer: '#E0E0E0',
+  secondaryContainer: '#351013',
+  onSecondaryContainer: '#FCA5A5',
   tertiary: DARK_TERTIARY,
   onTertiary: '#014C4C',
-  tertiaryContainer: '#016665',
-  onTertiaryContainer: '#9EE6E5',
+  tertiaryContainer: '#3A0B0B',
+  onTertiaryContainer: '#FECACA',
   error: DARK_ERROR,
   onError: '#4C100D',
   errorContainer: '#661511',
@@ -195,13 +195,13 @@ export const darkColors: TokenColors = {
   onBackground: DARK_ON_BACKGROUND,
   surface: DARK_SURFACE,
   onSurface: DARK_ON_SURFACE,
-  surfaceVariant: '#646466',
-  onSurfaceVariant: '#e3e4e6',
-  outline: '#444444',
+  surfaceVariant: '#242428',
+  onSurfaceVariant: '#B8BBC2',
+  outline: '#34343A',
   outlineVariant: '#a1a1a1',
-  mutedLight: '#3a3937',
+  mutedLight: '#232326',
   // Figma `Color/Secondary/Default` — dark binding from canonical file.
-  secondaryDefault: '#2a2928',
+  secondaryDefault: '#1A1A1E',
   // MD3 extras
   surfaceDisabled: withOpacity('#333333', 0.12),
   onSurfaceDisabled: withOpacity('#e5e5e6', 0.38),
@@ -241,7 +241,7 @@ export const darkColors: TokenColors = {
   focusStateOpacity: stateLayerOpacity.focus,
 
   // Menu
-  menuBackground: '#2a2a2a',
+  menuBackground: '#151518',
   menuBackgroundDimmed: withOpacity(DARK_SURFACE, 0.9),
   menuBackgroundActive: withOpacity(DARK_PRIMARY, 0.08),
   menuSeparator: withOpacity(DARK_PRIMARY, 0.5),
@@ -250,7 +250,7 @@ export const darkColors: TokenColors = {
   menuDangerText: DARK_ERROR,
 
   // Messages
-  authorBubbleBackground: '#212121',
+  authorBubbleBackground: '#1B1B1F',
   receivedMessageDocumentIcon: DARK_PRIMARY,
   sentMessageDocumentIcon: DARK_ON_SURFACE,
   userAvatarImageBackground: 'transparent',
@@ -263,21 +263,21 @@ export const darkColors: TokenColors = {
   searchBarBackground: 'rgba(28, 28, 30, 0.92)',
 
   // Thinking bubble
-  thinkingBubbleBackground: '#142e4d',
-  thinkingBubbleText: '#6abaff',
-  thinkingBubbleBorder: 'rgba(74, 140, 199, 0.6)',
-  thinkingBubbleShadow: '#4a9fff',
-  thinkingBubbleChevronBackground: 'rgba(74, 140, 199, 0.15)',
-  thinkingBubbleChevronBorder: 'rgba(74, 140, 199, 0.3)',
+  thinkingBubbleBackground: '#240C0E',
+  thinkingBubbleText: '#FCA5A5',
+  thinkingBubbleBorder: 'rgba(239, 68, 68, 0.45)',
+  thinkingBubbleShadow: '#EF4444',
+  thinkingBubbleChevronBackground: 'rgba(239, 68, 68, 0.12)',
+  thinkingBubbleChevronBorder: 'rgba(239, 68, 68, 0.28)',
 
   // Status bar
   bgStatusActive: '#22c55e',
   bgStatusIdle: '#4b5563',
 
   // Buttons
-  btnPrimaryBg: '#0f1629',
-  btnPrimaryBorder: '#192645',
-  btnPrimaryText: '#93c5fd',
+  btnPrimaryBg: '#250B0E',
+  btnPrimaryBorder: '#5B151B',
+  btnPrimaryText: '#FCA5A5',
   btnReadyBg: '#052e16',
   btnReadyBorder: '#166534',
   btnReadyText: '#6ee7b7',
@@ -286,7 +286,7 @@ export const darkColors: TokenColors = {
   btnDownloadText: '#34d399',
 
   // Icons
-  iconModelTypeText: '#93c5fd',
+  iconModelTypeText: '#F87171',
   iconModelTypeVision: '#c4b5fd',
   iconModelTypeAudio: '#fdba74',
 
